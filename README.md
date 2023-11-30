@@ -1,56 +1,110 @@
-# CFT Module Template
+# terraform-google-dataplex-auto-data-quality
 
-A template for starting a Cloud Foundation Toolkit Terraform module.
+## Description
+### Tagline
+This is an auto-generated module.
+
+### Detailed
+This module was generated from [terraform-google-module-template](https://github.com/terraform-google-modules/terraform-google-module-template/), which by default generates a module that simply creates a GCS bucket. As the module develops, this README should be updated.
+
+The resources/services/activations/deletions that this module will create/trigger are:
+
+- Create a GCS bucket with the provided name
+
+### PreDeploy
+To deploy this blueprint you must have an active billing account and billing permissions.
+
+## Architecture
+![alt text for diagram](https://www.link-to-architecture-diagram.com)
+1. Architecture description step no. 1
+2. Architecture description step no. 2
+3. Architecture description step no. N
+
+## Documentation
+- [Hosting a Static Website](https://cloud.google.com/storage/docs/hosting-static-website)
+
+## Deployment Duration
+Configuration: X mins
+Deployment: Y mins
+
+## Cost
+[Blueprint cost details](https://cloud.google.com/products/calculator?id=02fb0c45-cc29-4567-8cc6-f72ac9024add)
 
 ## Usage
 
-The template must be rendered using [Cookiecutter][cookiecutter].
+Basic usage of this module is as follows:
 
-Generate a new module by running the following command:
+```hcl
+module "dataplex_auto_data_quality" {
+  source  = "terraform-google-modules/dataplex-auto-data-quality/google"
+  version = "~> 0.1"
 
-`cookiecutter https://github.com/terraform-google-modules/terraform-google-module-template.git`
-
-## Generated Module
-
-A newly generated module includes logic to create a Google Cloud
-Storage bucket, a functional example module, and
-[Kitchen-Terraform][kitchen-terraform] integration tests. All of this
-content should be modified to suit the purpose of the new module.
-
-## Testing
-
-Changes to this template must be tested to ensure that generated
-modules remain functional.
-
-Refer to the [README][./terraform-google-{{cookiecutter.module_name}}/README.md] and [CONTRIBUTING][./terraform-google-{{cookiecutter.module_name}}/CONTRIBUTING.md]
-documents of the template to understand the requirements for testing
-the generated module.
-
-Export a Service Account key and env variables:
-
-```
-export SERVICE_ACCOUNT_JSON=$(< credentials.json)
-export TF_VAR_org_id="your_org_id"
-export TF_VAR_folder_id="your_folder_id"
-export TF_VAR_billing_account="your_billing_account_id"
+  project_id  = "<PROJECT ID>"
+  bucket_name = "gcs-test-bucket"
+}
 ```
 
-Generate a module and execute its tests by running the following
-command:
+Functional examples are included in the
+[examples](./examples/) directory.
 
-```sh
-make test
-```
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+## Inputs
 
-The module will be generated at
-`./staging/terraform-google-module-test`. If the tests pass, the module
-will be removed; otherwise, it will be left in place for inspection.
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| bucket\_name | The name of the bucket to create | `string` | n/a | yes |
+| project\_id | The project ID to deploy to | `string` | n/a | yes |
 
-In order to execute the test following tools need to be installed:
-- `make`
-- `docker`
+## Outputs
 
-[cookiecutter]: https://cookiecutter.readthedocs.io/
-[kitchen-terraform]: https://github.com/newcontext-oss/kitchen-terraform
-[contributing]: ./terraform-google-{{cookiecutter.module_name}}/CONTRIBUTING.md
-[readme]: ./terraform-google-{{cookiecutter.module_name}}/README.md
+| Name | Description |
+|------|-------------|
+| bucket\_name | Name of the bucket |
+
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+
+## Requirements
+
+These sections describe requirements for using this module.
+
+### Software
+
+The following dependencies must be available:
+
+- [Terraform][terraform] v0.13
+- [Terraform Provider for GCP][terraform-provider-gcp] plugin v3.0
+
+### Service Account
+
+A service account with the following roles must be used to provision
+the resources of this module:
+
+- Storage Admin: `roles/storage.admin`
+
+The [Project Factory module][project-factory-module] and the
+[IAM module][iam-module] may be used in combination to provision a
+service account with the necessary roles applied.
+
+### APIs
+
+A project with the following APIs enabled must be used to host the
+resources of this module:
+
+- Google Cloud Storage JSON API: `storage-api.googleapis.com`
+
+The [Project Factory module][project-factory-module] can be used to
+provision a project with the necessary APIs enabled.
+
+## Contributing
+
+Refer to the [contribution guidelines](./CONTRIBUTING.md) for
+information on contributing to this module.
+
+[iam-module]: https://registry.terraform.io/modules/terraform-google-modules/iam/google
+[project-factory-module]: https://registry.terraform.io/modules/terraform-google-modules/project-factory/google
+[terraform-provider-gcp]: https://www.terraform.io/docs/providers/google/index.html
+[terraform]: https://www.terraform.io/downloads.html
+
+## Security Disclosures
+
+Please see our [security disclosure process](./SECURITY.md).
