@@ -29,13 +29,14 @@ resource "google_bigquery_dataset" "dev" {
 
 resource "google_bigquery_table" "dev" {
   project             = module.project-services.project_id
-  deletion_protection = var.deletion_protection
   dataset_id          = google_bigquery_dataset.dev.dataset_id
   table_id            = local.env
+  deletion_protection = var.deletion_protection
 }
 
 resource "google_bigquery_job" "dev" {
-  job_id = local.env
+  project = module.project-services.project_id
+  job_id  = local.env
 
   labels = {
     "env" = local.env
