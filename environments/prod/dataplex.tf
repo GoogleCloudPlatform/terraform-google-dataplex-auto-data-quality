@@ -14,7 +14,7 @@
 
 resource "google_dataplex_datascan" "prod" {
   location     = var.region
-  data_scan_id = "${locals.env}-scan"
+  data_scan_id = "${local.env}-scan"
 
   data {
     resource = "//bigquery.googleapis.com/projects/${var.source_project}/datasets/${var.source_dataset}/tables/${var.source_table}"

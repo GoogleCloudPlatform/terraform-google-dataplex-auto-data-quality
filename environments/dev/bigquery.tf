@@ -30,14 +30,14 @@ resource "google_bigquery_dataset" "dev" {
 resource "google_bigquery_table" "dev" {
   deletion_protection = var.deletion_protection
   dataset_id          = google_bigquery_dataset.dev.dataset_id
-  table_id            = locals.env
+  table_id            = local.env
 }
 
 resource "google_bigquery_job" "dev" {
-  job_id = locals.env
+  job_id = local.env
 
   labels = {
-    "env" = locals.env
+    "env" = local.env
   }
 
   query {

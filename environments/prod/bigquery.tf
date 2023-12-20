@@ -19,7 +19,7 @@
 # # Create the BigQuery dataset
 resource "google_bigquery_dataset" "prod" {
   project                    = module.project-services.project_id
-  dataset_id                 = "${locals.env}-${random_id.id.hex}"
+  dataset_id                 = "${local.env}-${random_id.id.hex}"
   friendly_name              = "Prod table"
   description                = "Prod table"
   location                   = var.region
@@ -30,14 +30,14 @@ resource "google_bigquery_dataset" "prod" {
 resource "google_bigquery_table" "prod" {
   deletion_protection = var.deletion_protection
   dataset_id          = google_bigquery_dataset.prod.dataset_id
-  table_id            = locals.env
+  table_id            = local.env
 }
 
 resource "google_bigquery_job" "prod" {
-  job_id = locals.env
+  job_id = local.env
 
   labels = {
-    "env" = locals.env
+    "env" = local.env
   }
 
   query {
