@@ -19,7 +19,7 @@
 # # Create the BigQuery dataset
 resource "google_bigquery_dataset" "dev" {
   project                    = module.project-services.project_id
-  dataset_id                 = "${locals.env}-${random_id.id.hex}"
+  dataset_id                 = "${local.env}-${random_id.id.hex}"
   friendly_name              = "Dev table"
   description                = "Development table"
   location                   = var.region
