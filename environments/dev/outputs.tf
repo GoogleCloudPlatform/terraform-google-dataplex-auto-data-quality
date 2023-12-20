@@ -13,9 +13,9 @@
 # limitations under the License.
 
 output "bigquery_dataset" {
-  value = "${google_bigquery_dataset.dev.dataset_id}"
+  value = google_bigquery_dataset.dev.dataset_id
 }
 
 output "bigquery_table" {
-  value = "${google_bigquery_table.dev.table_id}"
+  value = google_bigquery_table.dev.table_id
 }

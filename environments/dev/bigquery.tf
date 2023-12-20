@@ -28,6 +28,7 @@ resource "google_bigquery_dataset" "dev" {
 }
 
 resource "google_bigquery_table" "dev" {
+  project             = module.project-services.project_id
   deletion_protection = var.deletion_protection
   dataset_id          = google_bigquery_dataset.dev.dataset_id
   table_id            = local.env
