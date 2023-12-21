@@ -36,7 +36,7 @@ resource "google_bigquery_table" "dev" {
 
 resource "google_bigquery_job" "dev" {
   project = module.project-services.project_id
-  job_id  = local.env
+  job_id  = "${local.env}_${random_id.id.hex}"
 
   labels = {
     "env" = local.env
