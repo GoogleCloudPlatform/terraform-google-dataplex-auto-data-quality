@@ -43,7 +43,7 @@ resource "google_bigquery_job" "dev" {
   }
 
   query {
-    query = "SELECT state FROM [bigquery-public-data:chicago_taxi_trips.taxi_trips]"
+    query = "SELECT * FROM [bigquery-public-data:chicago_taxi_trips.taxi_trips]"
 
     destination_table {
       project_id = google_bigquery_table.dev.project
