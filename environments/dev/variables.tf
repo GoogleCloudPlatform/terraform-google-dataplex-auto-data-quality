@@ -46,3 +46,9 @@ variable "deletion_protection" {
   description = "Whether or not to protect GCS resources from deletion when solution is modified or changed."
   default     = false
 }
+
+variable "source_table" {
+  type        = string
+  description = "Fully qualified name of the source table to load into the environment. Format: project_id.dataset.table"
+  default     = "bigquery-public-data.chicago_taxi_trips.taxi_trips"
+}

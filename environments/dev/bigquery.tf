@@ -42,8 +42,10 @@ resource "google_bigquery_job" "dev" {
     "env" = local.env
   }
 
-  query {
-    query = "SELECT * FROM [bigquery-public-data:chicago_taxi_trips.taxi_trips]"
+  copy {
+    source_table {
+      table_id = vars.sour
+    }
 
     destination_table {
       project_id = google_bigquery_table.dev.project
