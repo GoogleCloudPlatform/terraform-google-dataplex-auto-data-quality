@@ -36,21 +36,19 @@ resource "google_bigquery_table" "dev" {
 
 resource "google_bigquery_job" "dev" {
   project = module.project-services.project_id
-  job_id  = "${local.env}_${random_id.id.hex}"
+  job_id  = "${local.env}_copy"
 
   labels = {
     "env" = local.env
   }
 
   copy {
-    source_table {
-      table_id = vars.sour
+    source_tables {
+      table_id = var.source_table
     }
 
     destination_table {
-      project_id = google_bigquery_table.dev.project
-      dataset_id = google_bigquery_table.dev.dataset_id
-      table_id   = google_bigquery_table.dev.table_id
+      table_id = google_bigquery_table.dev.id
     }
   }
 }
