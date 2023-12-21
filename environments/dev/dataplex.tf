@@ -39,4 +39,6 @@ resource "google_dataplex_datascan" "dev" {
   }
 
   project = var.project_id
+
+  depends_on = [google_bigquery_job.dev]
 }
