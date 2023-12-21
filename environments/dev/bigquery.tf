@@ -35,8 +35,9 @@ resource "google_bigquery_table" "dev" {
 }
 
 resource "google_bigquery_job" "dev" {
-  project = module.project-services.project_id
-  job_id  = "${local.env}_copy"
+  project  = module.project-services.project_id
+  job_id   = "${local.env}_copy"
+  location = var.region
 
   labels = {
     "env" = local.env
