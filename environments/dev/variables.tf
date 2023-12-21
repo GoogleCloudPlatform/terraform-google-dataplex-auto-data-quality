@@ -49,6 +49,6 @@ variable "deletion_protection" {
 
 variable "source_table" {
   type        = string
-  description = "Fully qualified name of the source table to load into the environment. Format: project_id.dataset.table"
-  default     = "bigquery-public-data.chicago_taxi_trips.taxi_trips"
+  description = "Source table to load into the environment with format: projects/{{project}}/datasets/{{dataset_id}}/tables/{{table_id}}"
+  default     = "projects/bigquery-public-data/datasets/chicago_taxi_trips/tables/taxi_trips"
 }
