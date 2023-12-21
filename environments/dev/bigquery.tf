@@ -36,7 +36,7 @@ resource "google_bigquery_table" "dev" {
 
 resource "google_bigquery_job" "dev" {
   project  = module.project-services.project_id
-  job_id   = "${local.env}_copy"
+  job_id   = "${local.env}_${random_id.var_id.hex}"
   location = var.bq_region
 
   labels = {
@@ -51,5 +51,7 @@ resource "google_bigquery_job" "dev" {
     destination_table {
       table_id = google_bigquery_table.dev.id
     }
+
+    write_disposition = "WRITE_TRUNCATE"
   }
 }
