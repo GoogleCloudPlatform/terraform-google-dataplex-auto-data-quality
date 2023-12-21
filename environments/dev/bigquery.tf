@@ -22,7 +22,7 @@ resource "google_bigquery_dataset" "dev" {
   dataset_id                 = "${local.env}_${random_id.id.hex}"
   friendly_name              = "Dev table"
   description                = "Development table"
-  location                   = var.region
+  location                   = var.bq_region
   labels                     = var.labels
   delete_contents_on_destroy = var.force_destroy
 }
@@ -37,7 +37,7 @@ resource "google_bigquery_table" "dev" {
 resource "google_bigquery_job" "dev" {
   project  = module.project-services.project_id
   job_id   = "${local.env}_copy"
-  location = var.region
+  location = var.bq_region
 
   labels = {
     "env" = local.env

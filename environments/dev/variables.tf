@@ -20,6 +20,12 @@ variable "project_id" {
 variable "region" {
   type        = string
   description = "Google Cloud Region"
+  default     = "us-central1"
+}
+
+variable "bq_region" {
+  type        = string
+  description = "Google Cloud Region or Multi-region for BigQuery resources"
   default     = "US"
 }
 
