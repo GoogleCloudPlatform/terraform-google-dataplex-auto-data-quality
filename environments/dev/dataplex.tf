@@ -28,7 +28,14 @@ resource "google_dataplex_datascan" "dev" {
 
   # data_quality_spec = file(var.dev_rules_file)
   data_quality_spec {
-    file("rules.txt")
+    rules {
+      dimension   = "VALIDITY"
+      name        = "rule1"
+      description = "rule 1 for validity dimension"
+      table_condition_expectation {
+        sql_expression = "COUNT(*) > 0"
+      }
+    }
   }
 
   project = var.project_id
