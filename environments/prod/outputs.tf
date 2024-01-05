@@ -12,24 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# # You have to define a NONE row filter
-# row_filters:
-#  NONE:
-#    filter_sql_expr: |-
-#       True
+output "bigquery_dataset" {
+  value = google_bigquery_dataset.dev.dataset_id
+}
 
-rules:
-   name: is-unique
-   column: count
-   dimension: UNIQUENESS
-   uniquenessExpectation: {}
-   
+output "bigquery_table" {
+  value = google_bigquery_table.dev.table_id
+}
 
-# # Rule bindings associate rules to columns within tables.
-# rule_bindings:
-#   TRANSACTION_AMOUNT_VALID:
-#    entity_uri: bigquery://projects/bmiro-test/datasets/bmiro_test/tables/citibike_top_ten_start_station_ids
-#    column_id: count
-#    row_filter_ID: NONE
-#    rule_ids:
-#      - VALUE_ZERO_OR_POSITIVE
+output "bucket_name" {
+  description = "Name of the bucket"
+  value       = google_storage_bucket.main.name
+}
