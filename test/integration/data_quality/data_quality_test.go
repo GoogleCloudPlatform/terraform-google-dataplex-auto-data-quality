@@ -17,23 +17,28 @@ package multiple_buckets
 import (
 	"testing"
 
-	"github.com/GoogleCloudPlatform/cloud-foundation-toolkit/infra/blueprint-test/pkg/gcloud"
+	"github.com/GoogleCloudPlatform/cloud-foundation-toolkit/infra/blueprint-test/pkg/bq"
 	"github.com/GoogleCloudPlatform/cloud-foundation-toolkit/infra/blueprint-test/pkg/tft"
-	"github.com/GoogleCloudPlatform/cloud-foundation-toolkit/infra/blueprint-test/pkg/utils"
 	"github.com/stretchr/testify/assert"
 )
 
-func TestSimpleExample(t *testing.T) {
-	example := tft.NewTFBlueprintTest(t)
+func TestDataQuality(t *testing.T) {
+  branches := []string{
+		"dev",
+		"prod",
+	}
+  
+  for _, branch := range branches {
+		dq := tft.NewTFBlueprintTest(t, tft.WithTFDir("environments/" + branch))
 
-	example.DefineVerify(func(assert *assert.Assertions) {
-		example.DefaultVerify(assert)
+		dq.DefineVerify(func(assert *assert.Assertions) {
+			dq.DefaultVerify(assert)
 
-		projectID := example.GetStringOutput("project_id")
-		services := gcloud.Run(t, "services list", gcloud.WithCommonArgs([]string{"--project", projectID, "--format", "json"})).Array()
+			projectID := dq.GetStringOutput("project_id")
+			tables := bq.Runf(t, "--project_id=%s ls", projectID).Array()
 
-		match := utils.GetFirstMatchResult(t, services, "config.name", "storage.googleapis.com")
-		assert.Equal("ENABLED", match.Get("state").String(), "storage service should be enabled")
-	})
-	example.Test()
+			assert.Greater(len(tables), 0, branch + ": no tables created")
+		})
+		dq.Test()
+  }
 }

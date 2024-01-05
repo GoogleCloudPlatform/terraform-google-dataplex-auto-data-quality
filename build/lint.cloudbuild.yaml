@@ -12,24 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# # You have to define a NONE row filter
-# row_filters:
-#  NONE:
-#    filter_sql_expr: |-
-#       True
-
-rules:
-   name: is-unique
-   column: count
-   dimension: UNIQUENESS
-   uniquenessExpectation: {}
-   
-
-# # Rule bindings associate rules to columns within tables.
-# rule_bindings:
-#   TRANSACTION_AMOUNT_VALID:
-#    entity_uri: bigquery://projects/bmiro-test/datasets/bmiro_test/tables/citibike_top_ten_start_station_ids
-#    column_id: count
-#    row_filter_ID: NONE
-#    rule_ids:
-#      - VALUE_ZERO_OR_POSITIVE
+steps:
+- name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+  id: 'lint'
+  args: ['/usr/local/bin/test_lint.sh']
+tags:
+- 'ci'
+- 'lint'
+substitutions:
+  _DOCKER_IMAGE_DEVELOPER_TOOLS: 'cft/developer-tools'
+  _DOCKER_TAG_VERSION_DEVELOPER_TOOLS: '1.18'
