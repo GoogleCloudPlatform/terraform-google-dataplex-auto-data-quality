@@ -26,7 +26,7 @@ variable "region" {
 variable "labels" {
   type        = map(string)
   description = "A map of labels to apply to contained resources."
-  default     = { "analytics-lakehouse" = true }
+  default     = { "auto-data-quality" = true }
 }
 
 variable "enable_apis" {
@@ -48,6 +48,25 @@ variable "deletion_protection" {
 }
 
 variable "env" {
-  type = string
+  type        = string
+  description = "Lifecycle environment"
+  default     = "dev"
+}
 
+variable "source_project" {
+  type        = string
+  description = "Source project for the data"'
+  default     = "bigquery-public-data"
+}
+
+variable "source_dataset" {
+  type        = string
+  description = "Source dataset for the data"
+  default     = "thelook_ecommerce"
+}
+
+variable "source_table" { 
+  type        = string
+  description = "Source table for the data"
+  default     = "orders"
 }

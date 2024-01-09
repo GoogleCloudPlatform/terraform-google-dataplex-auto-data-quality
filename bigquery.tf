@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-
 # Set up BigQuery resources
 # # Create the BigQuery dataset
 resource "google_bigquery_dataset" "dataset" {

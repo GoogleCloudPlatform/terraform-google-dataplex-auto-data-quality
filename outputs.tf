@@ -13,14 +13,9 @@
 # limitations under the License.
 
 output "bigquery_dataset" {
-  value = google_bigquery_dataset.dev.dataset_id
+  value = google_bigquery_dataset.dataset.dataset_id
 }
 
 output "bigquery_table" {
-  value = google_bigquery_table.dev.table_id
-}
-
-output "bucket_name" {
-  description = "Name of the bucket"
-  value       = google_storage_bucket.main.name
+  value = google_bigquery_table.table.table_id
 }
