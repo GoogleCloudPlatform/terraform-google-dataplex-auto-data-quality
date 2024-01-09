@@ -29,7 +29,7 @@ resource "google_bigquery_dataset" "dataset" {
 
 resource "google_bigquery_table" "table" {
   deletion_protection = var.deletion_protection
-  dataset_id          = google_bigquery_dataset.prod.dataset_id
+  dataset_id          = google_bigquery_dataset.dataset.dataset_id
   table_id            = local.env
 }
 
