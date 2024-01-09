@@ -23,22 +23,15 @@ import (
 )
 
 func TestDataQuality(t *testing.T) {
-  branches := []string{
-		"dev",
-		"prod",
-	}
-  
-  for _, branch := range branches {
-		dq := tft.NewTFBlueprintTest(t, tft.WithTFDir("environments/" + branch))
+	dq := tft.NewTFBlueprintTest(t,)
 
-		dq.DefineVerify(func(assert *assert.Assertions) {
-			dq.DefaultVerify(assert)
+	dq.DefineVerify(func(assert *assert.Assertions) {
+		dq.DefaultVerify(assert)
 
-			projectID := dq.GetStringOutput("project_id")
-			tables := bq.Runf(t, "--project_id=%s ls", projectID).Array()
+		projectID := dq.GetStringOutput("project_id")
+		tables := bq.Runf(t, "--project_id=%s ls", projectID).Array()
 
-			assert.Greater(len(tables), 0, branch + ": no tables created")
-		})
-		dq.Test()
-  }
+		assert.Greater(len(tables), 0, "no tables created")
+	})
+	dq.Test()
 }

@@ -2,3 +2,4 @@ credentials.env
 credentials.test.json
 staging/*
 .trunk
+environments/*

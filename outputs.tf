@@ -12,14 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-steps:
-- name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-  id: 'lint'
-  args: ['/usr/local/bin/test_lint.sh']
-tags:
-- 'ci'
-- 'lint'
-substitutions:
-  _DOCKER_IMAGE_DEVELOPER_TOOLS: 'cft/developer-tools'
-  _DOCKER_TAG_VERSION_DEVELOPER_TOOLS: '1.18'
-  
+output "bigquery_dataset" {
+  value = google_bigquery_dataset.dev.dataset_id
+}
+
+output "bigquery_table" {
+  value = google_bigquery_table.dev.table_id
+}
+
+output "bucket_name" {
+  description = "Name of the bucket"
+  value       = google_storage_bucket.main.name
+}
