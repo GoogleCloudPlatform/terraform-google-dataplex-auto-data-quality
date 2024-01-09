@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------
-# NOTE: This repository is a work in progress. 
+# NOTE: This repository is a work in progress.
 --------------------------------------------------------------------------------
 
 # terraform-google-dataplex-auto-data-quality

@@ -55,7 +55,7 @@ variable "env" {
 
 variable "source_project" {
   type        = string
-  description = "Source project for the data"'
+  description = "Source project for the data"
   default     = "bigquery-public-data"
 }
 
@@ -65,7 +65,7 @@ variable "source_dataset" {
   default     = "thelook_ecommerce"
 }
 
-variable "source_table" { 
+variable "source_table" {
   type        = string
   description = "Source table for the data"
   default     = "orders"

@@ -16,8 +16,8 @@
 steps:
 - id: 'branch name'
   name: 'alpine'
-  entrypoint: 'sh'  
-  args: 
+  entrypoint: 'sh'
+  args:
   - '-c'
   - |
       if [ -f "tfbackend/${BRANCH_NAME}.tfbackend"] && -f "tfvars/${BRANCH_NAME}.tfvars"]
@@ -56,7 +56,7 @@ steps:
 - id: 'tf plan'
   name: 'hashicorp/terraform:1.0.0'
   entrypoint: 'sh'
-  args: 
+  args:
   - '-c'
   - |
       for vars in tfvars/*
@@ -85,5 +85,4 @@ steps:
         echo "Branch '$BRANCH_NAME' does not represent an official environment."
         echo "*******************************************************************************"
       fi
-# [END tf-apply]      
-
+# [END tf-apply]
