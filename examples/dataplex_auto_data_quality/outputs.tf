@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-output "bucket_name" {
-  description = "The name of the bucket."
-  value       = module.dataplex_auto_data_quality.bucket_name
+output "project_id" {
+  description = "The name of the project."
+  value       = var.project_id
 }

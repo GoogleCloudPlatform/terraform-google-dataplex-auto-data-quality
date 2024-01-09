@@ -13,9 +13,11 @@
 # limitations under the License.
 
 output "bigquery_dataset" {
-  value = google_bigquery_dataset.dataset.dataset_id
+  description = "The BigQuery dataset to use"
+  value       = google_bigquery_dataset.dataset.dataset_id
 }
 
 output "bigquery_table" {
-  value = google_bigquery_table.table.table_id
+  description = "The BigQuery table to use"
+  value       = google_bigquery_table.table.table_id
 }
