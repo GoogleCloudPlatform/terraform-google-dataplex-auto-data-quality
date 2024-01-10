@@ -37,5 +37,5 @@ resource "google_dataplex_datascan" "dq_scan" {
     }
   }
 
-  project = var.project_id
+  project = module.project-services.project_id
 }
