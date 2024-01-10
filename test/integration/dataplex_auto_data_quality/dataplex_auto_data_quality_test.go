@@ -23,7 +23,7 @@ import (
 )
 
 func TestDataQuality(t *testing.T) {
-	dq := tft.NewTFBlueprintTest(t,)
+	dq := tft.NewTFBlueprintTest(t)
 
 	dq.DefineVerify(func(assert *assert.Assertions) {
 		dq.DefaultVerify(assert)
