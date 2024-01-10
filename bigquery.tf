@@ -34,7 +34,8 @@ resource "google_bigquery_table" "table" {
 }
 
 resource "google_bigquery_job" "job" {
-  job_id = local.env
+  project = module.project-services.project_id
+  job_id  = local.env
 
   labels = {
     "env" = local.env
