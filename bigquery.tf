@@ -16,104 +16,38 @@
 
 # Set up BigQuery resources
 # # Create the BigQuery dataset
-resource "google_bigquery_dataset" "dev" {
+resource "google_bigquery_dataset" "dataset" {
   project                    = module.project-services.project_id
-  dataset_id                 = "dev-${random_id.id.hex}"
-  friendly_name              = "Dev table"
-  description                = "Development table"
+  dataset_id                 = "${local.env}_${random_id.id.hex}"
+  friendly_name              = "${local.env} table"
+  description                = "${local.env} table"
   location                   = var.region
   labels                     = var.labels
   delete_contents_on_destroy = var.force_destroy
 }
 
-resource "google_bigquery_dataset" "stage" {
-  project                    = module.project-services.project_id
-  dataset_id                 = "stage-${random_id.id.hex}"
-  friendly_name              = "Staging table"
-  description                = "Staging table"
-  location                   = var.region
-  labels                     = var.labels
-  delete_contents_on_destroy = var.force_destroy
-}
-
-resource "google_bigquery_dataset" "dev" {
-  project                    = module.project-services.project_id
-  dataset_id                 = "prod-${random_id.id.hex}"
-  friendly_name              = "Prod table"
-  description                = "Production table"
-  location                   = var.region
-  labels                     = var.labels
-  delete_contents_on_destroy = var.deletion_protection
-}
-
-resource "google_bigquery_table" "dev" {
+resource "google_bigquery_table" "table" {
+  project             = module.project-services.project_id
   deletion_protection = var.deletion_protection
-  dataset_id          = google_bigquery_dataset.dev.dataset_id
-  table_id            = "dev"
+  dataset_id          = google_bigquery_dataset.dataset.dataset_id
+  table_id            = local.env
 }
 
-resource "google_bigquery_table" "stage" {
-  deletion_protection = var.deletion_protection
-  dataset_id          = google_bigquery_dataset.stage.dataset_id
-  table_id            = "stage"
-}
-
-resource "google_bigquery_table" "prod" {
-  deletion_protection = var.deletion_protection
-  dataset_id          = google_bigquery_dataset.prod.dataset_id
-  table_id            = "prod"
-}
-
-resource "google_bigquery_job" "dev" {
-  job_id = "dev"
+resource "google_bigquery_job" "job" {
+  project = module.project-services.project_id
+  job_id  = "${local.env}_${random_id.id.hex}"
 
   labels = {
-    "env" = "dev"
+    "env" = local.env
   }
 
   query {
-    query = "SELECT state FROM [bigquery-public-data:chicago_taxi_trips.taxi_trips]"
+    query = "SELECT state FROM `${var.source_project}.${var.source_dataset}.${var.source_table}"
 
     destination_table {
-      project_id = google_bigquery_table.dev.project
-      dataset_id = google_bigquery_table.dev.dataset_id
-      table_id   = google_bigquery_table.dev.table_id
-    }
-  }
-}
-
-resource "google_bigquery_job" "stage" {
-  job_id = "stage"
-
-  labels = {
-    "env" = "stag"
-  }
-
-  query {
-    query = "SELECT * FROM [bigquery-public-data:chicago_taxi_trips.taxi_trips]"
-
-    destination_table {
-      project_id = google_bigquery_table.stage.project
-      dataset_id = google_bigquery_table.stage.dataset_id
-      table_id   = google_bigquery_table.stage.table_id
-    }
-  }
-}
-
-resource "google_bigquery_job" "prod" {
-  job_id = "prod"
-
-  labels = {
-    "env" = "prod"
-  }
-
-  query {
-    query = "SELECT state FROM [bigquery-public-data:chicago_taxi_trips.taxi_trips]"
-
-    destination_table {
-      project_id = google_bigquery_table.prod.project
-      dataset_id = google_bigquery_table.prod.dataset_id
-      table_id   = google_bigquery_table.prod.table_id
+      project_id = google_bigquery_table.table.project
+      dataset_id = google_bigquery_table.table.dataset_id
+      table_id   = google_bigquery_table.table.table_id
     }
   }
 }

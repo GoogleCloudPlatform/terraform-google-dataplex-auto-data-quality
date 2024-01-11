@@ -17,6 +17,5 @@
 module "dataplex_auto_data_quality" {
   source = "../.."
 
-  project_id  = var.project_id
-  bucket_name = var.bucket_name
+  project_id = var.project_id
 }

@@ -1,5 +1,5 @@
 /**
- * Copyright 2021 Google LLC
+ * Copyright 2023 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,15 +15,35 @@
  */
 
 terraform {
-  required_version = ">= 0.13"
   required_providers {
     google = {
       source  = "hashicorp/google"
-      version = ">= 3.53, < 6"
+      version = ">= 4.83.0, < 6.0.0"
+    }
+    google-beta = {
+      source  = "hashicorp/google-beta"
+      version = ">= 4.83.0, < 6.0.0"
+    }
+    random = {
+      source  = "hashicorp/random"
+      version = ">= 2"
+    }
+    archive = {
+      source  = "hashicorp/archive"
+      version = ">= 2"
+    }
+    time = {
+      source  = "hashicorp/time"
+      version = ">= 0.9.1"
+    }
+    http = {
+      source  = "hashicorp/http"
+      version = ">= 3.2.1"
     }
   }
+  required_version = ">= 0.13"
 
   provider_meta "google" {
-    module_name = "blueprints/terraform/dataplex-auto-data-quality/v0.0.1"
+    module_name = "blueprints/terraform/terraform-google-analytics-lakehouse/v0.3.0"
   }
 }

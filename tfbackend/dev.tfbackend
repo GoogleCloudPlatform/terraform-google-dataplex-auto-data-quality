@@ -12,12 +12,5 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-output "bigquery_dataset" {
-  description = "The BigQuery dataset to use"
-  value       = google_bigquery_dataset.dataset.dataset_id
-}
-
-output "bigquery_table" {
-  description = "The BigQuery table to use"
-  value       = google_bigquery_table.table.table_id
-}
+bucket = "YOUR-BUCKET"
+prefix = "env/dev"

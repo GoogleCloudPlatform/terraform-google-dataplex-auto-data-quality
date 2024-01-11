@@ -1,0 +1,88 @@
+# Copyright 2019 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+steps:
+- id: 'branch name'
+  name: 'alpine'
+  entrypoint: 'sh'
+  args:
+  - '-c'
+  - |
+      if [ -f "tfbackend/${BRANCH_NAME}.tfbackend"] && -f "tfvars/${BRANCH_NAME}.tfvars"]
+        echo "***********************"
+        echo "${BRANCH_NAME}"
+        echo "***********************"
+      else
+        if [ ! -f "tfbackend/${BRANCH_NAME}.tfbackend"]
+          echo "Missing file 'tfbackend/${BRANCH_NAME}.tfbackend'
+        fi
+        if [ ! -f "tfvars/${BRANCH_NAME}.tfvars"]
+          echo "Missing file 'tfvars/${BRANCH_NAME}.tfvars'
+        fi
+        exit 1
+
+# [START tf-init]
+- id: 'tf init'
+  name: 'hashicorp/terraform:1.0.0'
+  entrypoint: 'sh'
+  args:
+  - '-c'
+  - |
+      for backend in tfbackend/*
+      do
+        env=${backend##*/}
+        env=${env%%.*}
+        echo ""
+        echo "*************** TERRAFORM INIT ******************"
+        echo "******* At environment: ${env} ********"
+        echo "*************************************************"
+        terraform init --backend-config=${backend} || exit 1
+      done
+# [END tf-init]
+
+# [START tf-plan]
+- id: 'tf plan'
+  name: 'hashicorp/terraform:1.0.0'
+  entrypoint: 'sh'
+  args:
+  - '-c'
+  - |
+      for vars in tfvars/*
+      do
+        env=${tfvars##*/}
+        env=${env%%.*}
+        echo ""
+        echo "*************** TERRAFORM PLAN ******************"
+        echo "******* At environment: ${env} ********"
+        echo "*************************************************"
+        terraform plan -var-file=${vars} || exit 1
+      done
+# [END tf-plan]
+
+# [START tf-apply]
+- id: 'tf apply'
+  name: 'hashicorp/terraform:1.0.0'
+  entrypoint: 'sh'
+  args:
+  - '-c'
+  - |
+      if [ -f "tfvars/$BRANCH_NAME.tfvars" ]; then
+        terraform apply -auto-approve -var-file="tfvars/${BRANCH_NAME}.tfvars"
+      else
+        echo "***************************** SKIPPING APPLYING *******************************"
+        echo "Branch '$BRANCH_NAME' does not represent an official environment."
+        echo "*******************************************************************************"
+      fi
+# [END tf-apply]
