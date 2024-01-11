@@ -35,14 +35,14 @@ resource "google_bigquery_table" "table" {
 
 resource "google_bigquery_job" "job" {
   project = module.project-services.project_id
-  job_id  = local.env
+  job_id  = "${local.env_${random_id.id.hex}""
 
   labels = {
     "env" = local.env
   }
 
   query {
-    query = "SELECT state FROM [bigquery-public-data:chicago_taxi_trips.taxi_trips]"
+    query = "SELECT state FROM `${var.source_project}.${var.source_dataset}.${var.source_table}"
 
     destination_table {
       project_id = google_bigquery_table.table.project

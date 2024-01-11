@@ -41,12 +41,3 @@ module "project-services" {
 resource "random_id" "id" {
   byte_length = 4
 }
-
-#random dynamic id
-resource "random_id" "var_id" {
-  byte_length = 4
-
-  keepers = {
-    reset = timestamp()
-  }
-}
