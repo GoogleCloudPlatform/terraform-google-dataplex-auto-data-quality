@@ -12,5 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-project_id = "bmiro-autodq-cicd"
-
+samplingPercent: 100
+  - dimension: VALIDITY
+    name: MY RULE
+    decription: SAMPLE RULE FOR VALIDITY
+    tableConditionExpectation:
+      sqlExpression: COUNT(*) > 0

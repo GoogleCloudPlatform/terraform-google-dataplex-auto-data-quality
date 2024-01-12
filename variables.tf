@@ -70,3 +70,9 @@ variable "source_table" {
   description = "Source table for the data"
   default     = "orders"
 }
+
+variable "data_quality_spec_file" {
+  type        = string
+  description = "Path to a YAML file containing DataQualityScan related setting. Input content can use either camelCase or snake_case. Variables description are provided in https://cloud.google.com/dataplex/docs/reference/rest/v1/DataQualitySpec."
+  default     = "./rules/orders.dev.yaml"
+}

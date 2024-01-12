@@ -17,7 +17,7 @@ resource "google_dataplex_datascan" "dq_scan" {
   data_scan_id = "${local.env}-scan"
 
   data {
-    resource = "//bigquery.googleapis.com/projects/${var.source_project}/datasets/${var.source_dataset}/tables/${var.source_table}"
+    resource = "//bigquery.googleapis.com/${google_bigquery_table.id}"
   }
 
   execution_spec {
@@ -26,16 +26,85 @@ resource "google_dataplex_datascan" "dq_scan" {
     }
   }
 
+  # Custom logic to parse out rules metadata from a local rules.yaml file
   data_quality_spec {
-    rules {
-      dimension   = "VALIDITY"
-      name        = "rule1"
-      description = "rule 1 for validity dimension"
-      table_condition_expectation {
-        sql_expression = "COUNT(*) > 0"
+    sampling_percent = try(local.sampling_percent, null)
+    row_filter       = try(local.row_filter, null)
+
+    dynamic "rules" {
+      for_each = local.rules
+      content {
+        column      = try(rules.value.column, null)
+        ignore_null = try(rules.value.ignore_null, null)
+        dimension   = rules.value.dimension
+        threshold   = try(rules.value.threshold, null)
+
+        dynamic "non_null_expectation" {
+          for_each = try(rules.value.non_null_expectation, null) != null ? [""] : []
+          content {
+          }
+        }
+
+        dynamic "range_expectation" {
+          for_each = try(rules.value.range_expectation, null) != null ? [""] : []
+          content {
+            min_value          = try(rules.value.range_expectation.min_value, null)
+            max_value          = try(rules.value.range_expectation.max_value, null)
+            strict_min_enabled = try(rules.value.range_expectation.strict_min_enabled, null)
+            strict_max_enabled = try(rules.value.range_expectation.strict_max_enabled, null)
+          }
+        }
+
+        dynamic "set_expectation" {
+          for_each = try(rules.value.set_expectation, null) != null ? [""] : []
+          content {
+            values = rules.value.set_expectation.values
+          }
+        }
+
+        dynamic "uniqueness_expectation" {
+          for_each = try(rules.value.uniqueness_expectation, null) != null ? [""] : []
+          content {
+          }
+        }
+
+        dynamic "regex_expectation" {
+          for_each = try(rules.value.regex_expectation, null) != null ? [""] : []
+          content {
+            regex = rules.value.regex_expectation.regex
+          }
+        }
+
+        dynamic "statistic_range_expectation" {
+          for_each = try(rules.value.statistic_range_expectation, null) != null ? [""] : []
+          content {
+            min_value          = try(rules.value.statistic_range_expectation.min_value, null)
+            max_value          = try(rules.value.statistic_range_expectation.max_value, null)
+            strict_min_enabled = try(rules.value.statistic_range_expectation.strict_min_enabled, null)
+            strict_max_enabled = try(rules.value.statistic_range_expectation.strict_max_enabled, null)
+            statistic          = rules.value.statistic_range_expectation.statistic
+          }
+        }
+
+        dynamic "row_condition_expectation" {
+          for_each = try(rules.value.row_condition_expectation, null) != null ? [""] : []
+          content {
+            sql_expression = rules.value.row_condition_expectation.sql_expression
+          }
+        }
+
+        dynamic "table_condition_expectation" {
+          for_each = try(rules.value.table_condition_expectation, null) != null ? [""] : []
+          content {
+            sql_expression = rules.value.table_condition_expectation.sql_expression
+          }
+        }
+
       }
     }
   }
 
   project = module.project-services.project_id
+
+  depends_on = [google_bigquery_job.job]
 }
