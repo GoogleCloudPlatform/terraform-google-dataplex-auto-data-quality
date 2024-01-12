@@ -17,7 +17,7 @@ resource "google_dataplex_datascan" "dq_scan" {
   data_scan_id = "${local.env}-scan"
 
   data {
-    resource = "//bigquery.googleapis.com/${google_bigquery_table.id}"
+    resource = "//bigquery.googleapis.com/${google_bigquery_table.table.id}"
   }
 
   execution_spec {
