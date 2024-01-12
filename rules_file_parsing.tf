@@ -15,7 +15,7 @@
  */
 
 locals {
-  _file_data_quality_spec_raw = yamldecode(file(var.data_quality_spec_file))
+  _file_data_quality_spec_raw = yamldecode(file("${path.module}/${var.data_quality_spec_file}"))
   _parsed_rules = [
     for rule in try(local._file_data_quality_spec_raw.rules, []) : {
       column               = try(rule.column, null)

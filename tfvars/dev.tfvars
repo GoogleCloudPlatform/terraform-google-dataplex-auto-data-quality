@@ -15,5 +15,5 @@
 # project to deploy in
 project_id = "YOUR-PROJECT"
 
-# local data quality rule YAML file, i.e. './rules/your-file.yaml'
-data_quality_spec_file = "YOUR-SPEC-FILE"
+# local data quality rules YAML file
+data_quality_spec_file = "rules/YOUR-SPEC-FILE"
