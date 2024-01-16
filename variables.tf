@@ -74,7 +74,7 @@ variable "source_table" {
 variable "schema_file" {
   type        = string
   description = "Schema file for table"
-  default     = "src/schema/orders_schema.json"
+  default     = "src/schemas/orders_schema.json"
 }
 
 variable "data_quality_spec_file" {
