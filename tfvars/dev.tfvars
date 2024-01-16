@@ -12,5 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-project_id = "bmiro-autodq-cicd"
+# project to deploy in
+project_id = "YOUR-PROJECT"
 
+# local data quality rules YAML file
+data_quality_spec_file = "rules/YOUR-SPEC-FILE"

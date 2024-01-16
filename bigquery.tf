@@ -31,6 +31,8 @@ resource "google_bigquery_table" "table" {
   deletion_protection = var.deletion_protection
   dataset_id          = google_bigquery_dataset.dataset.dataset_id
   table_id            = local.env
+
+  schema = file("${path.module}/${var.schema_file}")
 }
 
 resource "google_bigquery_job" "job" {
@@ -42,7 +44,7 @@ resource "google_bigquery_job" "job" {
   }
 
   query {
-    query = "SELECT state FROM `${var.source_project}.${var.source_dataset}.${var.source_table}"
+    query = "SELECT * FROM `${var.source_project}.${var.source_dataset}.${var.source_table}"
 
     destination_table {
       project_id = google_bigquery_table.table.project
