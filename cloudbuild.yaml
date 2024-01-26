@@ -20,17 +20,18 @@ steps:
   args:
   - '-c'
   - |
-      if [ -f "tfbackend/${BRANCH_NAME}.tfbackend"] && -f "tfvars/${BRANCH_NAME}.tfvars"]
+      if [ -f "tfbackend/${BRANCH_NAME}.tfbackend"] && -f "tfvars/${BRANCH_NAME}.tfvars"]; then
         echo "***********************"
         echo "${BRANCH_NAME}"
         echo "***********************"
       else
-        if [ ! -f "tfbackend/${BRANCH_NAME}.tfbackend"]
+        if [ ! -f "tfbackend/${BRANCH_NAME}.tfbackend"]; then
           echo "Missing file 'tfbackend/${BRANCH_NAME}.tfbackend'
         fi
-        if [ ! -f "tfvars/${BRANCH_NAME}.tfvars"]
+        if [ ! -f "tfvars/${BRANCH_NAME}.tfvars"]; then
           echo "Missing file 'tfvars/${BRANCH_NAME}.tfvars'
         fi
+      fi
         exit 1
 
 # [START tf-init]
