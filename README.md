@@ -4,18 +4,9 @@
 
 # terraform-google-dataplex-auto-data-quality
 
-## Description
-### Tagline
-This is an auto-generated module.
+This modules shows how to deploy [data quality](https://cloud.google.com/dataplex/docs/auto-data-quality-overview) rules on [BigQuery](https://cloud.google.com/bigquery) tables across development and production environments using [Cloud Build](https://cloud.google.com/build).
 
-### Detailed
-This module was generated from [terraform-google-module-template](https://github.com/terraform-google-modules/terraform-google-module-template/), which by default generates a module that simply creates a GCS bucket. As the module develops, this README should be updated.
-
-The resources/services/activations/deletions that this module will create/trigger are:
-
-- Create a GCS bucket with the provided name
-
-### PreDeploy
+## preDeploy
 To deploy this blueprint you must have an active billing account and billing permissions.
 
 ## Architecture
@@ -76,7 +67,7 @@ These sections describe requirements for using this module.
 The following dependencies must be available:
 
 - [Terraform][terraform] v0.13
-- [Terraform Provider for GCP][terraform-provider-gcp] plugin v3.0
+- [Terraform Provider for GCP][terraform-provider-gcp] plugin ~> v4.83
 
 ### Service Account
 
@@ -95,6 +86,8 @@ A project with the following APIs enabled must be used to host the
 resources of this module:
 
 - Google Cloud Storage JSON API: `storage-api.googleapis.com`
+- Google Cloud Resource Manager API: `cloudresourcemanager.googleapis.com`
+- Google Cloud Service Usage API: `serviceusage.googleapis.com`
 
 The [Project Factory module][project-factory-module] can be used to
 provision a project with the necessary APIs enabled.

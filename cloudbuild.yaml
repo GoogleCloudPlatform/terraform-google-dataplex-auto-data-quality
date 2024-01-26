@@ -20,18 +20,9 @@ steps:
   args:
   - '-c'
   - |
-      if [ -f "tfbackend/${BRANCH_NAME}.tfbackend"] && -f "tfvars/${BRANCH_NAME}.tfvars"]
-        echo "***********************"
-        echo "${BRANCH_NAME}"
-        echo "***********************"
-      else
-        if [ ! -f "tfbackend/${BRANCH_NAME}.tfbackend"]
-          echo "Missing file 'tfbackend/${BRANCH_NAME}.tfbackend'
-        fi
-        if [ ! -f "tfvars/${BRANCH_NAME}.tfvars"]
-          echo "Missing file 'tfvars/${BRANCH_NAME}.tfvars'
-        fi
-        exit 1
+      echo "***********************"
+      echo "${BRANCH_NAME}"
+      echo "***********************"
 
 # [START tf-init]
 - id: 'tf init'
@@ -40,16 +31,23 @@ steps:
   args:
   - '-c'
   - |
-      for backend in tfbackend/*
-      do
-        env=${backend##*/}
-        env=${env%%.*}
-        echo ""
-        echo "*************** TERRAFORM INIT ******************"
-        echo "******* At environment: ${env} ********"
-        echo "*************************************************"
-        terraform init --backend-config=${backend} || exit 1
-      done
+      if [ -d "environments/$BRANCH_NAME/" ]; then
+        cd environments/$BRANCH_NAME
+        terraform init
+      else
+        for dir in environments/*/
+        do 
+          cd ${dir}   
+          env=${dir%*/}
+          env=${env#*/}
+          echo ""
+          echo "*************** TERRAFORM INIT ******************"
+          echo "******* At environment: ${env} ********"
+          echo "*************************************************"
+          terraform init || exit 1
+          cd ../../
+        done
+      fi 
 # [END tf-init]
 
 # [START tf-plan]
@@ -59,16 +57,23 @@ steps:
   args:
   - '-c'
   - |
-      for vars in tfvars/*
-      do
-        env=${tfvars##*/}
-        env=${env%%.*}
-        echo ""
-        echo "*************** TERRAFORM PLAN ******************"
-        echo "******* At environment: ${env} ********"
-        echo "*************************************************"
-        terraform plan -var-file=${vars} || exit 1
-      done
+      if [ -d "environments/$BRANCH_NAME/" ]; then
+        cd environments/$BRANCH_NAME
+        terraform plan
+      else
+        for dir in environments/*/
+        do 
+          cd ${dir}   
+          env=${dir%*/}
+          env=${env#*/}  
+          echo ""
+          echo "*************** TERRAFOM PLAN ******************"
+          echo "******* At environment: ${env} ********"
+          echo "*************************************************"
+          terraform plan || exit 1
+          cd ../../
+        done
+      fi 
 # [END tf-plan]
 
 # [START tf-apply]
@@ -78,8 +83,9 @@ steps:
   args:
   - '-c'
   - |
-      if [ -f "tfvars/$BRANCH_NAME.tfvars" ]; then
-        terraform apply -auto-approve -var-file="tfvars/${BRANCH_NAME}.tfvars"
+      if [ -d "environments/$BRANCH_NAME/" ]; then
+        cd environments/$BRANCH_NAME  
+        terraform apply -auto-approve"
       else
         echo "***************************** SKIPPING APPLYING *******************************"
         echo "Branch '$BRANCH_NAME' does not represent an official environment."
