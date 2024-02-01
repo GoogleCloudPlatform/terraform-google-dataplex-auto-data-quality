@@ -14,7 +14,6 @@
 
 terraform {
   backend "gcs" {
-    bucket = "YOUR-BUCKET"
-    prefix = "env/prod"
+    bucket = "bmiro-autodq-cicd-prod-tfstate"
   }
 }
