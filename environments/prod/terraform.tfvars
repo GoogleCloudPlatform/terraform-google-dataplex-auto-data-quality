@@ -13,8 +13,8 @@
 # limitations under the License.
 
 # project to deploy in
-project_id = "YOUR-PROJECT"
+project_id = "bmiro-autodq-cicd"
 
 # local data quality rules YAML file 
-data_quality_spec_file = "rules/YOUR-SPEC-FILE"
+data_quality_spec_file = "rules/orders.dev.yaml"
 
