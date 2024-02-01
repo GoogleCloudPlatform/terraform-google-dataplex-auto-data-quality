@@ -13,9 +13,5 @@
 # limitations under the License.
 
 module "deploy-dev" {
-  source     = "../../modules/deploy"
-  project_id = "YOUR-PROJECT"
-
-  # local data quality rules YAML file
-  data_quality_spec_file = "../../rules/YOUR-SPEC-FILE"
+  source = "../../modules/deploy"
 }
