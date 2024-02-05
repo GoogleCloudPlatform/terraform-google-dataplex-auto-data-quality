@@ -14,6 +14,7 @@
 
 module "deploy-prod" {
   source                 = "../../modules/deploy"
-  project_id             = "bmiro-autodq-cicd"
+  project_id             = "PROJECT-ID"
   data_quality_spec_file = "rules/orders.dev.yaml"
+  environment            = "prod"
 }
