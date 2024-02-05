@@ -13,7 +13,7 @@
 # limitations under the License.
 
 locals {
-  env = var.env
+  env = var.environment
 }
 
 module "project-services" {

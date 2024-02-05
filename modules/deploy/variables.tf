@@ -47,7 +47,7 @@ variable "deletion_protection" {
   default     = false
 }
 
-variable "env" {
+variable "environment" {
   type        = string
   description = "Lifecycle environment"
   default     = "dev"
@@ -74,11 +74,11 @@ variable "source_table" {
 variable "schema_file" {
   type        = string
   description = "Schema file for table"
-  default     = "src/schemas/orders_schema.json"
+  default     = "schemas/orders_schema.json"
 }
 
 variable "data_quality_spec_file" {
   type        = string
   description = "Path to a YAML file containing DataQualityScan related setting. Input content can use either camelCase or snake_case. Variables description are provided in https://cloud.google.com/dataplex/docs/reference/rest/v1/DataQualitySpec."
-  default     = "rules/orders.dev.yaml"
+  default     = "/rules/orders.dev.yaml"
 }

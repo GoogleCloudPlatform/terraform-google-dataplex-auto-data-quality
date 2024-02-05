@@ -15,7 +15,8 @@
  */
 
 module "dataplex_auto_data_quality" {
-  source = "../.."
+  source = "../../modules/deploy"
 
-  project_id = var.project_id
+  project_id  = var.project_id
+  environment = "dev"
 }
