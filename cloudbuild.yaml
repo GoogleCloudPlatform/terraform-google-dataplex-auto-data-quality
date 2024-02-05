@@ -36,8 +36,8 @@ steps:
         terraform init
       else
         for dir in environments/*/
-        do 
-          cd ${dir}   
+        do
+          cd ${dir}
           env=${dir%*/}
           env=${env#*/}
           echo ""
@@ -47,7 +47,7 @@ steps:
           terraform init || exit 1
           cd ../../
         done
-      fi 
+      fi
 # [END tf-init]
 
 # [START tf-plan]
@@ -62,10 +62,10 @@ steps:
         terraform plan
       else
         for dir in environments/*/
-        do 
-          cd ${dir}   
+        do
+          cd ${dir}
           env=${dir%*/}
-          env=${env#*/}  
+          env=${env#*/}
           echo ""
           echo "*************** TERRAFORM PLAN ******************"
           echo "******* At environment: ${env} ********"
@@ -73,7 +73,7 @@ steps:
           terraform plan || exit 1
           cd ../../
         done
-      fi 
+      fi
 # [END tf-plan]
 
 # [START tf-apply]
@@ -84,7 +84,7 @@ steps:
   - '-c'
   - |
       if [ -d "environments/$BRANCH_NAME/" ]; then
-        cd environments/$BRANCH_NAME  
+        cd environments/$BRANCH_NAME
         terraform apply -auto-approve
       else
         echo "***************************** SKIPPING APPLYING *******************************"

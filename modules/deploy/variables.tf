@@ -47,7 +47,7 @@ variable "deletion_protection" {
   default     = false
 }
 
-variable "env" {
+variable "environment" {
   type        = string
   description = "Lifecycle environment"
   default     = "dev"
