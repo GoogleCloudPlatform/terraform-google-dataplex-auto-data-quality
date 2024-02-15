@@ -14,6 +14,6 @@
 
 terraform {
   backend "gcs" {
-    bucket = "DEV-BUCKET"
+    bucket = "steve-wergeles-sandbox-tfstate"
   }
 }
