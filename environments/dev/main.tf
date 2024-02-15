@@ -14,7 +14,7 @@
 
 module "deploy-dev" {
   source                 = "../../modules/deploy"
-  project_id             = "steve-wergeles-sandbox"
+  project_id             = "swergeles-sandbox"
   data_quality_spec_file = "rules/orders.dev.yaml"
   environment            = "dev"
 }
