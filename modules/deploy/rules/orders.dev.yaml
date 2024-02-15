@@ -13,9 +13,56 @@
 # limitations under the License.
 
 samplingPercent: 100
+rowFilter: 
 rules:
+  - column: order_id
+    dimension: COMPLETENESS
+    name: non_null
+    decription: Sample rule for non-null column
+    threshold: 1.0
+    non_null_expectation: {}
+  - column: user_id
+    dimension: COMPLETENESS
+    name: non_null
+    decription: Sample rule for non-null column
+    threshold: 1.0
+    non_null_expectation: {}
+  - column: created_at
+    dimension: COMPLETENESS
+    name: non_null
+    decription: Sample rule for non-null column
+    threshold: 1.0
+    non_null_expectation: {}
+  - column: order_id
+    dimension: UNIQUENESS
+    name: unique
+    decription: Sample rule for unique column
+    uniqueness_expectation: {}
+  - column: status
+    dimension: VALIDITY
+    name: one_of_set
+    decription: Sample rule for values in a set
+    ignore_null: false
+    set_expectation:
+      values:
+      - Shipped
+      - Complete
+      - Processing
+      - Cancelled
+      - Returned
+  - column: num_of_item
+    dimension: VALIDITY
+    name: non_null
+    decription: Sample rule for values in a range
+    ignore_null: false
+    threshold: 0.99
+    range_expectation:
+      max_value: '1'
+      # min_value: 
+      strict_max_enabled: false
+      strict_min_enabled: false
   - dimension: VALIDITY
-    name: MY RULE
-    decription: SAMPLE RULE FOR VALIDITY
+    name: not_empty_table
+    decription: Sample rule for a non-empty table
     tableConditionExpectation:
       sqlExpression: COUNT(*) > 0
