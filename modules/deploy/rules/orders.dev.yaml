@@ -28,9 +28,9 @@ rules:
     threshold: 1.0
     non_null_expectation: {}
   - column: created_at
+    decription: Sample rule for non-null column
     dimension: COMPLETENESS
     name: non_null
-    decription: Sample rule for non-null column
     threshold: 1.0
     non_null_expectation: {}
   - column: order_id
