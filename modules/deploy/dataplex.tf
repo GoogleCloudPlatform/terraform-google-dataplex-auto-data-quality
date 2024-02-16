@@ -37,8 +37,6 @@ resource "google_dataplex_datascan" "dq_scan" {
         column      = try(rules.value.column, null)
         ignore_null = try(rules.value.ignore_null, null)
         dimension   = rules.value.dimension
-        description = try(rules.value.description, null)
-        name        = try(rules.value.name, null)
         threshold   = try(rules.value.threshold, null)
 
         dynamic "non_null_expectation" {
