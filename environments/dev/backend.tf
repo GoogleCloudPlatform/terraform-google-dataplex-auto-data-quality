@@ -14,6 +14,6 @@
 
 terraform {
   backend "gcs" {
-    bucket = "swergeles-sandbox-tfstate"
+    bucket = "DEV-BUCKET"
   }
 }

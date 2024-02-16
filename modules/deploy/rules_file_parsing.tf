@@ -21,8 +21,6 @@ locals {
       column               = try(rule.column, null)
       ignore_null          = try(rule.ignoreNull, rule.ignore_null, null)
       dimension            = rule.dimension
-      description          = try(rule.description, null)
-      name                 = try(rule.name, null)
       threshold            = try(rule.threshold, null)
       non_null_expectation = try(rule.nonNullExpectation, rule.non_null_expectation, null)
       range_expectation = can(rule.rangeExpectation) || can(rule.range_expectation) ? {
