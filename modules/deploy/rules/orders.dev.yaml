@@ -13,7 +13,7 @@
 # limitations under the License.
 
 samplingPercent: 100
-rowFilter: 
+rowFilter:
 rules:
   - column: order_id
     dimension: COMPLETENESS
@@ -58,7 +58,7 @@ rules:
     threshold: 0.99
     range_expectation:
       max_value: '1'
-      # min_value: 
+      # min_value:
       strict_max_enabled: false
       strict_min_enabled: false
   - dimension: VALIDITY
