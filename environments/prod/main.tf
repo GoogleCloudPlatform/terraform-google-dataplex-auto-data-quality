@@ -14,7 +14,7 @@
 
 module "deploy-prod" {
   source                 = "../../modules/deploy"
-  project_id             = "PROJECT-ID"
+  project_id             = "PROJECT_ID"
   data_quality_spec_file = "rules/orders.dev.yaml"
   environment            = "prod"
 }
