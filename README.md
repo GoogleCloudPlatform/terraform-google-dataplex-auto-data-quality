@@ -1,7 +1,3 @@
---------------------------------------------------------------------------------
-# NOTE: This repository is a work in progress.
---------------------------------------------------------------------------------
-
 # terraform-google-dataplex-auto-data-quality
 
 This modules shows how to deploy [data quality](https://cloud.google.com/dataplex/docs/auto-data-quality-overview) rules on [BigQuery](https://cloud.google.com/bigquery) tables across development and production environments using [Cloud Build](https://cloud.google.com/build).
@@ -10,20 +6,20 @@ This modules shows how to deploy [data quality](https://cloud.google.com/dataple
 To deploy this blueprint you must have an active billing account and billing permissions.
 
 ## Architecture
-![alt text for diagram](https://www.link-to-architecture-diagram.com)
-1. Architecture description step no. 1
-2. Architecture description step no. 2
-3. Architecture description step no. N
+![alt architecture](./assets/manage-data-quality-rules-as-code.png)
+1. Pushes data quality rules as YAML to a personal branch
+2. PR from personal branch to upstream `dev` triggers Cloud Build to deploy Terraform
+3. PR from upstream `dev` to upstream `prod` triggers Cloud Build to deploy Terraform
 
 ## Documentation
-- [Hosting a Static Website](https://cloud.google.com/storage/docs/hosting-static-website)
+- [Manage data quality rules as code](https://cloud.google.com/dataplex/docs/manage-data-quality-rules-as-code)
 
 ## Deployment Duration
-Configuration: X mins
-Deployment: Y mins
+Configuration: 5 mins
+Deployment: 5 mins
 
 ## Cost
-[Blueprint cost details](https://cloud.google.com/products/calculator?id=02fb0c45-cc29-4567-8cc6-f72ac9024add)
+[Blueprint cost details](https://cloud.google.com/products/calculator-legacy/#id=0c72736c-163f-4a7a-87e2-9df8bb7fde61)
 
 ## Usage
 
@@ -31,11 +27,11 @@ Basic usage of this module is as follows:
 
 ```hcl
 module "dataplex_auto_data_quality" {
-  source  = "terraform-google-modules/dataplex-auto-data-quality/google"
-  version = "~> 0.1"
+  source = "modules/deploy"
 
-  project_id  = "<PROJECT ID>"
-  bucket_name = "gcs-test-bucket"
+  project_id             = var.project_id
+  data_quality_spec_file = "rules/orders.dev.yaml"
+  environment            = "dev"
 }
 ```
 
@@ -47,14 +43,14 @@ Functional examples are included in the
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| bucket\_name | The name of the bucket to create | `string` | n/a | yes |
 | project\_id | The project ID to deploy to | `string` | n/a | yes |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| bucket\_name | Name of the bucket |
+| bigquery\_dataset | The BigQuery dataset to use |
+| bigquery\_table | The BigQuery table to use |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
@@ -74,6 +70,9 @@ The following dependencies must be available:
 A service account with the following roles must be used to provision
 the resources of this module:
 
+- BigQuery Admin: `roles/bigquery.admin`
+- Cloud Build Admin: `roles/cloudbuild.builds.editor`
+- Dataplex Admin: `roles/dataplex.admin`
 - Storage Admin: `roles/storage.admin`
 
 The [Project Factory module][project-factory-module] and the

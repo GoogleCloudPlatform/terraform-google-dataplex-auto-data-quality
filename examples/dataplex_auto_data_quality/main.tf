@@ -17,6 +17,7 @@
 module "dataplex_auto_data_quality" {
   source = "../../modules/deploy"
 
-  project_id  = var.project_id
-  environment = "dev"
+  project_id             = var.project_id
+  data_quality_spec_file = "rules/orders.dev.yaml"
+  environment            = "dev"
 }
