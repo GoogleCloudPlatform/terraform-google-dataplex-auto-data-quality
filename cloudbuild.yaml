@@ -26,7 +26,7 @@ steps:
 
 # [START tf-init]
 - id: 'tf init'
-  name: 'hashicorp/terraform:1.9.5'
+  name: 'hashicorp/terraform:1.9.8'
   entrypoint: 'sh'
   args:
   - '-c'
@@ -52,7 +52,7 @@ steps:
 
 # [START tf-plan]
 - id: 'tf plan'
-  name: 'hashicorp/terraform:1.9.5'
+  name: 'hashicorp/terraform:1.9.8'
   entrypoint: 'sh'
   args:
   - '-c'
@@ -78,7 +78,7 @@ steps:
 
 # [START tf-apply]
 - id: 'tf apply'
-  name: 'hashicorp/terraform:1.9.5'
+  name: 'hashicorp/terraform:1.9.8'
   entrypoint: 'sh'
   args:
   - '-c'
