@@ -14,6 +14,8 @@
 
 
 steps:
+options:
+  logging: CLOUD_LOGGING_ONLY
 - id: 'branch name'
   name: 'alpine'
   entrypoint: 'sh'
