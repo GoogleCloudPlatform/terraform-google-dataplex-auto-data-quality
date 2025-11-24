@@ -14,7 +14,7 @@
 
 module "deploy-dev" {
   source                 = "../../modules/deploy"
-  project_id             = "PROJECT_ID"
+  project_id             = "governance-lab-demo"
   data_quality_spec_file = "rules/orders.dev.yaml"
   environment            = "dev"
 }
