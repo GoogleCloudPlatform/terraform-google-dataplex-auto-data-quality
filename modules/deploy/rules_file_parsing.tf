@@ -51,6 +51,9 @@ locals {
       table_condition_expectation = can(rule.tableConditionExpectation) || can(rule.table_condition_expectation) ? {
         sql_expression = try(rule.tableConditionExpectation.sqlExpression, rule.table_condition_expectation.sql_expression, null)
       } : null
+      sql_assertion = can(rule.sqlAssertion) || can(rule.sql_assertion) ? {
+        sql_statement = try(rule.sqlAssertion.sqlStatement, rule.sql_assertion.sql_statement, null)
+      } : null
     }
   ]
 
